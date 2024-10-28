@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  stocks-tracker:
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./src/config/credentials.json:/app/src/config/credentials.json:ro
+    environment:
+      - NODE_ENV=production
+      - CHROME_BIN=/usr/bin/google-chrome
+    cap_add:
+      - SYS_ADMIN
+    init: true

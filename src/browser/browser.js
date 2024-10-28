@@ -9,7 +9,13 @@ class Browser {
   async init() {
     this.browser = await puppeteer.launch({
       headless: "new",
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu'
+      ],
+      executablePath: process.env.CHROME_BIN || null
     });
     this.page = await this.browser.newPage();
     
