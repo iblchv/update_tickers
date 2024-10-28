@@ -7,9 +7,12 @@ services:
       - .:/app
       - /app/node_modules
       - ./src/config/credentials.json:/app/src/config/credentials.json:ro
+      - ./logs:/var/log
     environment:
       - NODE_ENV=production
       - CHROME_BIN=/usr/bin/google-chrome
+      - TZ=Europe/Moscow
     cap_add:
       - SYS_ADMIN
     init: true
+    restart: unless-stopped

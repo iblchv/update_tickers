@@ -7,4 +7,4 @@ credentials.json
 .DS_Store
 README.md
 docker-compose*
-Dockerfile
+logs/
