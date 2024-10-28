@@ -37,9 +37,3 @@ async function fetchGoldPrice() {
 }
 
 module.exports = { fetchGoldPrice };
-
-function testGoldPrice() {
-  fetchGoldPrice().then(console.log).catch(console.error);
-}
-
-testGoldPrice();

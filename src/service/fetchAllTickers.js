@@ -19,13 +19,14 @@ async function fetchAllTickers(date) {
     };
 
     console.log('Авторизация успешна. Получаем данные по тикерам...');
-    console.log({ tickerList });
 
-    const promises = tickerList.map(async (ticker) => {
+    for ( const ticker of tickerList ) {
       try {
         console.log(`Получаем данные для ${ticker.code}...`);
 
         const result = await fetchTicker(ticker.code, formattedDate.isoPoint);
+        console.log(`Успешно получены данные для ${ticker.code}: ${result.price}`);
+
         await sheetsApi.appendRows('scrape2', [ [
           result.code,
           result.title,
@@ -33,38 +34,34 @@ async function fetchAllTickers(date) {
           result.price
         ] ]);
 
-        console.log(`Успешно получены данные для ${ticker.code}`);
-
         // Случайная задержка между запросами
         await sleep(DELAYS.MIN_FETCH_DELAY + Math.random() * (DELAYS.MAX_FETCH_DELAY - DELAYS.MIN_FETCH_DELAY));
       } catch ( error ) {
         console.error(`Ошибка при получении данных для ${ticker.code}:`, error.message);
-        await sheetsApi.appendRows('scrape2', [ [
-          ticker.code,
-          ticker.title,
-          formattedDate.isoReverse,
-          '',
-          `Ошибка: ${error.message}`
-        ] ]);
+        // await sheetsApi.appendRows('scrape2', [ [
+        //   ticker.code,
+        //   ticker.title,
+        //   formattedDate.isoReverse,
+        //   '',
+        //   `Ошибка: ${error.message}`
+        // ] ]);
       }
-    });
-
-    // Ждем завершения всех операций
-    await Promise.all(promises);
-
-    console.log('Получаем цену на золото...');
-    try {
-      const goldData = await fetchGoldPrice();
-      await sheetsApi.appendRows('scrape2', [ [
-        goldData.code,
-        goldData.title,
-        goldData.date,
-        goldData.price
-      ] ]);
-      console.log('Цена на золото успешно добавлена');
-    } catch ( error ) {
-      console.error('Ошибка при получении цены на золото:', error);
     }
+
+
+    // console.log('Получаем цену на золото...');
+    // try {
+    //   const goldData = await fetchGoldPrice();
+    //   await sheetsApi.appendRows('scrape2', [ [
+    //     goldData.code,
+    //     goldData.title,
+    //     goldData.date,
+    //     goldData.price
+    //   ] ]);
+    //   console.log('Цена на золото успешно добавлена');
+    // } catch ( error ) {
+    //   console.error('Ошибка при получении цены на золото:', error);
+    // }
 
     console.log('Форматируем лист...');
     await sheetsApi.formatSheet('scrape2');

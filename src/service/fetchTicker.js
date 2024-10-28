@@ -16,9 +16,9 @@ async function fetchTicker(code, date) {
   }
 
   const formattedDate = format(parsedDate, 'dd.MM.yyyy');
-  const url = ticker.uri
-    .replace(/date(?:From|_from)=[^&]+/, 'dateFrom=' + formattedDate)
-    .replace(/date(?:To|_to)=[^&]+/, 'dateTo=' + formattedDate);
+  const url = ticker.get_uri(formattedDate, formattedDate);
+
+  console.log({ url });
 
   const browser = new Browser();
 
@@ -41,7 +41,7 @@ async function fetchTicker(code, date) {
       throw new Error('Данные не найдены для указанной даты');
     }
 
-    const price = chartData.slice(-1)[ 0 ][ 1 ];
+    const price = chartData.slice(0, 1)[ 0 ][ 1 ];
     const formattedPrice = price * ticker.multiply;
 
     return {
