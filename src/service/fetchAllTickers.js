@@ -9,10 +9,14 @@ const { DELAYS } = require('../config/config');
 async function fetchAllTickers(date) {
   try {
     console.log('Начинаем получение данных...');
+    console.log('Дата: ', date);
 
     const auth = await authorize();
     const sheetsApi = new SheetsAPI(auth);
     const targetDate = date ? new Date(date) : getToday().dateObject;
+
+    console.log(targetDate);
+
     const formattedDate = {
       isoPoint: targetDate.toISOString().split('T')[ 0 ].replace(/-/g, '.'),
       isoReverse: targetDate.toISOString().split('T')[ 0 ].split('-').reverse().join('-')
@@ -49,19 +53,19 @@ async function fetchAllTickers(date) {
     }
 
 
-    // console.log('Получаем цену на золото...');
-    // try {
-    //   const goldData = await fetchGoldPrice();
-    //   await sheetsApi.appendRows('scrape2', [ [
-    //     goldData.code,
-    //     goldData.title,
-    //     goldData.date,
-    //     goldData.price
-    //   ] ]);
-    //   console.log('Цена на золото успешно добавлена');
-    // } catch ( error ) {
-    //   console.error('Ошибка при получении цены на золото:', error);
-    // }
+    console.log('Получаем цену на золото...');
+    try {
+      const goldData = await fetchGoldPrice();
+      await sheetsApi.appendRows('scrape2', [ [
+        goldData.code,
+        goldData.title,
+        goldData.date,
+        goldData.price
+      ] ]);
+      console.log('Цена на золото успешно добавлена');
+    } catch ( error ) {
+      console.error('Ошибка при получении цены на золото:', error);
+    }
 
     console.log('Форматируем лист...');
     await sheetsApi.formatSheet('scrape2');

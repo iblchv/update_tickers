@@ -4,7 +4,7 @@ const { format } = require('date-fns');
 
 async function fetchGoldPrice() {
   try {
-    const url = 'https://krasnodar.zoloto-md.ru/bullion-coins/i-inostrannyye/zolotaya-investiczionnaya-moneta-avstrijskij-filarmoniker';
+    const url = 'https://zoloto-md.ru/bullion-coins/i-inostrannyye/zolotaya-moneta-avstrii-filarmoniker-2002-2016-g.v.,-31.1-g-chistogo-zolota-proba-9999';
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
 

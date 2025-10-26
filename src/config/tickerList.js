@@ -1,11 +1,11 @@
 const tickerList = [
-  {
-    'code': 'SBER',
-    'title': 'Сбербанк России, акция обыкновенная',
-    'uri': 'https://investfunds.ru/stocks/Sberbank/1/?action=chartData&stocks%5B%5D=20%2F1&dateFrom=25.07.2024&dateTo=25.10.2024&index=false&needVolume=true&newAlgorithm=true',
-    'get_uri': (dFrom, dTo) => `https://investfunds.ru/stocks/Sberbank/1/?action=chartData&stocks%5B%5D=20%2F1&dateFrom=${dFrom}&dateTo=${dTo}&index=false&needVolume=true&newAlgorithm=true`,
-    'multiply': 1,
-  },
+  // {
+  //   'code': 'SBER',
+  //   'title': 'Сбербанк России, акция обыкновенная',
+  //   'uri': 'https://investfunds.ru/stocks/Sberbank/1/?action=chartData&stocks%5B%5D=20%2F1&dateFrom=25.07.2024&dateTo=25.10.2024&index=false&needVolume=true&newAlgorithm=true',
+  //   'get_uri': (dFrom, dTo) => `https://investfunds.ru/stocks/Sberbank/1/?action=chartData&stocks%5B%5D=20%2F1&dateFrom=${dFrom}&dateTo=${dTo}&index=false&needVolume=true&newAlgorithm=true`,
+  //   'multiply': 1,
+  // },
   {
     'code': 'TMOS',
     'title': 'Тинькофф Индекс МосБиржи',

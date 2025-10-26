@@ -1,7 +1,7 @@
 const { format } = require('date-fns');
 
 function getToday() {
-  const dateObject = new Date('2024-08-25 12:00:00');
+  const dateObject = new Date();
   return {
     dateObject,
     isoPoint: format(dateObject, 'yyyy.MM.dd'),

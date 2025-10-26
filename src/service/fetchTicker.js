@@ -5,18 +5,28 @@ const { DELAYS } = require('../config/config');
 const tickerList = require('../config/tickerList');
 
 async function fetchTicker(code, date) {
+  console.log({ code, date });
+
   const ticker = tickerList.find(t => t.code === code);
   if ( !ticker ) {
     throw new Error('Тикер не найден: ' + code);
   }
 
   const parsedDate = new Date(date);
+
+  const dateFrom = new Date(+new Date(date) - 30 * 24 * 60 * 60 * 1000);
+  const dateTo = new Date(date);
+
   if ( isNaN(parsedDate.getTime()) ) {
     throw new Error('Неверный формат даты. Используйте YYYY-MM-DD');
   }
 
   const formattedDate = format(parsedDate, 'dd.MM.yyyy');
-  const url = ticker.get_uri(formattedDate, formattedDate);
+
+  const formattedDateFrom = format(dateFrom, 'dd.MM.yyyy');
+  const formattedDateTo = format(dateTo, 'dd.MM.yyyy');
+
+  const url = ticker.get_uri(formattedDateFrom, formattedDateTo);
 
   console.log({ url });
 
@@ -41,7 +51,7 @@ async function fetchTicker(code, date) {
       throw new Error('Данные не найдены для указанной даты');
     }
 
-    const price = chartData.slice(0, 1)[ 0 ][ 1 ];
+    const price = chartData.slice(-1)[ 0 ][ 1 ];
     const formattedPrice = price * ticker.multiply;
 
     return {
